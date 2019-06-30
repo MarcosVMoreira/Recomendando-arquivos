@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
  *
  * @author Marcos
  */
-public class Main {
+class Main {
     
     public static void main(String[] args) throws IOException {
         
@@ -21,8 +21,8 @@ public class Main {
         
         Data data = new Data();
         
-        dataArray = data.readFile("1.in");
-    //  dataArray = data.readInput();
+        //dataArray = data.readFile("3.in");
+        dataArray = data.readInput();
 
         totalDocAmount = dataArray.length-1;
         tfidf = new double[totalDocAmount][26];
@@ -72,7 +72,7 @@ public class Main {
             max = Double.MIN_VALUE;
             aux = 0;
             for (int j = 0; j < similaryArray.length; j++) {
-                if (similaryArray[j] > max) {
+                if (similaryArray[j] >= max) {
                     max = similaryArray[j];
                     aux = j;
                 }
@@ -82,7 +82,7 @@ public class Main {
             
             aux++;
             
-            System.out.println("D"+aux+":"+format(max));
+            System.out.println("D"+aux+":"+format(max).replace(",", "."));
 
         }
         
@@ -212,190 +212,193 @@ class Data {
         } else {
             for (int i = 0; i < split.length; i++) {
                 switch (split[i].charAt(0)) {
-                case 'A':
-                    bool[0] = true;
-                    data[counter][0]++;
-                    if (counter < numberOfDocs-1) {
-                        ocurrencyCounter[0]++;
-                    }
-                    break;
-                case 'B':
-                    bool[1] = true;
-                    data[counter][1]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[1]++;
-                    }
-                    break;
-                case 'C':
-                    bool[2] = true;
-                    data[counter][2]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[2]++;
-                    }
-                    break;
-                case 'D':
-                    bool[3] = true;
-                    data[counter][3]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[3]++;
-                    }
-                    break;
-                case 'E':
-                    bool[4] = true;
-                    data[counter][4]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[4]++;
-                    }
-                    break;
-                case 'F':
-                    bool[5] = true;
-                    data[counter][5]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[5]++;
-                    }
-                    break;
-                case 'G':
-                    bool[6] = true;
-                    data[counter][6]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[6]++;
-                    }
-                    break;
-                case 'H':
-                    bool[7] = true;
-                    data[counter][7]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[7]++;
-                    }
-                    break;
-                case 'I':
-                    bool[8] = true;
-                    data[counter][8]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[8]++;
-                    }
-                    break;
-                case 'J':
-                    bool[9] = true;
-                    data[counter][9]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[9]++;
-                    }
-                    break;
-                case 'K':
-                    bool[10] = true;
-                    data[counter][10]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[10]++;
-                    }
-                    break;
-                case 'L':
-                    bool[11] = true;
-                    data[counter][11]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[11]++;
-                    }
-                    break;
-                case 'M':
-                    bool[12] = true;
-                    data[counter][12]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[12]++;
-                    }
-                    break;
-                case 'N':
-                    bool[13] = true;
-                    data[counter][13]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[13]++;
-                    }
-                    break;
-                case 'O':
-                    bool[14] = true;
-                    data[counter][14]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[14]++;
-                    }
-                    break;
-                case 'P':
-                    bool[15] = true;
-                    data[counter][15]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[15]++;
-                    }
-                    break;
-                case 'Q':
-                    bool[16] = true;
-                    data[counter][16]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[16]++;
-                    }
-                    break;
-                case 'R':
-                    bool[17] = true;
-                    data[counter][17]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[17]++;
-                    }
-                    break;
-                case 'S':
-                    bool[18] = true;
-                    data[counter][18]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[18]++;
-                    }
-                    break;
-                case 'T':
-                    bool[19] = true;
-                    data[counter][19]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[19]++;
-                    }
-                    break;
-                case 'U':
-                    bool[20] = true;
-                    data[counter][20]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[20]++;
-                    }
-                    break;
-                case 'V':
-                    bool[21] = true;
-                    data[counter][21]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[21]++;
-                    }
-                    break;
-                case 'W':
-                    bool[22] = true;
-                    data[counter][22]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[22]++;
-                    }
-                    break;
-                case 'X':
-                    bool[23] = true;
-                    data[counter][23]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[23]++;
-                    }
-                    break;
-                case 'Y':
-                    bool[24] = true;
-                    data[counter][24]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[24]++;
-                    }
-                    break;
-                case 'Z':
-                    bool[25] = true;
-                    data[counter][25]++;
-                    if (counter < numberOfDocs-1) {                                
-                        ocurrencyCounter[25]++;
-                    }
-                    break;
+                    case 'A':
+                        bool[0] = true;
+                        data[counter][0]++;
+                        if (counter < numberOfDocs-1) {
+                            ocurrencyCounter[0]++;
+                        }
+                        break;
+                    case 'B':
+                        bool[1] = true;
+                        data[counter][1]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[1]++;
+                        }
+                        break;
+                    case 'C':
+                        bool[2] = true;
+                        data[counter][2]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[2]++;
+                        }
+                        break;
+                    case 'D':
+                        bool[3] = true;
+                        data[counter][3]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[3]++;
+                        }
+                        break;
+                    case 'E':
+                        bool[4] = true;
+                        data[counter][4]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[4]++;
+                        }
+                        break;
+                    case 'F':
+                        bool[5] = true;
+                        data[counter][5]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[5]++;
+                        }
+                        break;
+                    case 'G':
+                        bool[6] = true;
+                        data[counter][6]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[6]++;
+                        }
+                        break;
+                    case 'H':
+                        bool[7] = true;
+                        data[counter][7]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[7]++;
+                        }
+                        break;
+                    case 'I':
+                        bool[8] = true;
+                        data[counter][8]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[8]++;
+                        }
+                        break;
+                    case 'J':
+                        bool[9] = true;
+                        data[counter][9]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[9]++;
+                        }
+                        break;
+                    case 'K':
+                        bool[10] = true;
+                        data[counter][10]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[10]++;
+                        }
+                        break;
+                    case 'L':
+                        bool[11] = true;
+                        data[counter][11]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[11]++;
+                        }
+                        break;
+                    case 'M':
+                        bool[12] = true;
+                        data[counter][12]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[12]++;
+                        }
+                        break;
+                    case 'N':
+                        bool[13] = true;
+                        data[counter][13]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[13]++;
+                        }
+                        break;
+                    case 'O':
+                        bool[14] = true;
+                        data[counter][14]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[14]++;
+                        }
+                        break;
+                    case 'P':
+                        bool[15] = true;
+                        data[counter][15]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[15]++;
+                        }
+                        break;
+                    case 'Q':
+                        bool[16] = true;
+                        data[counter][16]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[16]++;
+                        }
+                        break;
+                    case 'R':
+                        bool[17] = true;
+                        data[counter][17]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[17]++;
+                        }
+                        break;
+                    case 'S':
+                        bool[18] = true;
+                        data[counter][18]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[18]++;
+                        }
+                        break;
+                    case 'T':
+                        bool[19] = true;
+                        data[counter][19]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[19]++;
+                        }
+                        break;
+                    case 'U':
+                        bool[20] = true;
+                        data[counter][20]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[20]++;
+                        }
+                        break;
+                    case 'V':
+                        bool[21] = true;
+                        data[counter][21]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[21]++;
+                        }
+                        break;
+                    case 'W':
+                        bool[22] = true;
+                        data[counter][22]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[22]++;
+                        }
+                        break;
+                    case 'X':
+                        bool[23] = true;
+                        data[counter][23]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[23]++;
+                        }
+                        break;
+                    case 'Y':
+                        bool[24] = true;
+                        data[counter][24]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[24]++;
+                        }
+                        break;
+                    case 'Z':
+                        bool[25] = true;
+                        data[counter][25]++;
+                        if (counter < numberOfDocs-1) {                                
+                            ocurrencyCounter[25]++;
+                        }
+                        break;
                 }
+                
+
             }
+
         }
     }
 
