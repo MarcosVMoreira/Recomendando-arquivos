@@ -1,16 +1,9 @@
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+import java.text.DecimalFormat;
 
 /**
  *
@@ -20,76 +13,125 @@ public class Main {
     
     public static void main(String[] args) throws IOException {
         
-        double[] tfidf;
-        int[] tfidfLastDoc;
+        double[][] tfidf;
+        int[] numberOfFilesContainOcurrency;
         int totalDocAmount;
+        double[] similaryArray, tfidfLastDoc;
+        int[][] dataArray;
         
         Data data = new Data();
         
-        int[][] dataArray = data.readFile("1.in");
-    //    int[][] dataArray = data.readInput();
+        dataArray = data.readFile("1.in");
+    //  dataArray = data.readInput();
 
         totalDocAmount = dataArray.length-1;
-        tfidf = new double[26];
-        tfidfLastDoc = new int[26];
+        tfidf = new double[totalDocAmount][26];
+        tfidfLastDoc = new double[26];
+        similaryArray = new double[totalDocAmount];
+
         
-        for (int i = 0; i < dataArray.length; i++) {
+        /*for (int i = 0; i < dataArray.length; i++) {
             for (int j = 0; j < dataArray[i].length; j++) {
                 System.out.print(dataArray[i][j]+" ");
             }
             System.out.println("");
-        }
+        }*/
         
-        int[] numberOfFilesContainOcurrency = data.getNumberOfFilesContainOcurrency();
+        numberOfFilesContainOcurrency = data.getNumberOfFilesContainOcurrency();
         
-        System.out.println("numberOfFilesContainOcurrency ");
+       /* System.out.println("numberOfFilesContainOcurrency ");
         for (int i = 0; i < numberOfFilesContainOcurrency.length; i++) {
             System.out.print(numberOfFilesContainOcurrency[i]+" ");
-        }
+        }*/
             
-        tfidf = tfidfCalculation(totalDocAmount, numberOfFilesContainOcurrency);
+        tfidf = tfidfCalculation(dataArray, totalDocAmount, numberOfFilesContainOcurrency);
         
-        System.out.println("\ntfidf ");
+        /*System.out.println("\ntfidf ");
         for (int i = 0; i < tfidf.length; i++) {
-            System.out.print(tfidf[i]+" ");
+            for (int j = 0; j < tfidf[i].length; j++) {
+                System.out.print(tfidf[i][j]+" ");
+            }
+            System.out.println("");
+        }*/
+        
+        for (int i = 0; i < dataArray[totalDocAmount-1].length; i++) {
+            tfidfLastDoc[i] = (double) dataArray[totalDocAmount][i];
         }
         
-        tfidfLastDoc = dataArray[totalDocAmount-1];
-        
-        System.out.println("\ntfidfLastDoc ");
+        /*System.out.println("\ntfidfLastDoc ");
         for (int i = 0; i < tfidfLastDoc.length; i++) {
             System.out.print(tfidfLastDoc[i]+" ");
+        }*/
+        
+        similaryArray = similarityCalculation(totalDocAmount, tfidf, tfidfLastDoc);
+            
+        double max = Double.MIN_VALUE;
+        int aux = 0;
+        
+        for (int i = 0; i < similaryArray.length; i++) {
+            max = Double.MIN_VALUE;
+            aux = 0;
+            for (int j = 0; j < similaryArray.length; j++) {
+                if (similaryArray[j] > max) {
+                    max = similaryArray[j];
+                    aux = j;
+                }
+            }
+            
+            similaryArray[aux] = Double.MIN_VALUE;
+            
+            aux++;
+            
+            System.out.println("D"+aux+":"+format(max));
+
         }
         
     }
     
-    public static double[] similarityCalculation (int totalDocAmount) {
+    public static String format(double x) {  
+        DecimalFormat df = new DecimalFormat("#0.00");  
+        return df.format(x);
+    }
+    
+    public static double[] similarityCalculation (int totalDocAmount, double[][] tfidf, double[] tfidfLastDoc) {
+        
         double[] similatiryArray = new double[totalDocAmount];
+        double sum = 0;
+        double firstSqrt = 0;
+        double secondSqrt = 0;
         
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                
+        for (int i = 0; i < totalDocAmount; i++) {
+            sum = 0;
+            firstSqrt = 0;
+            secondSqrt = 0;
+            for (int j = 0; j < 26; j++) {
+                sum = sum + (double) (tfidf[i][j] * tfidfLastDoc[j]);
+                firstSqrt = firstSqrt + (double) tfidf[i][j]*tfidf[i][j];
+                secondSqrt = secondSqrt + (double) tfidfLastDoc[j]*tfidfLastDoc[j];
             }
+            similatiryArray[i] = Math.floor((((double) sum / (double) (Math.sqrt(firstSqrt) * (Math.sqrt(secondSqrt)))))*10000)/100.00;
+
         }
-        
-        
         
         return similatiryArray;
     }
     
-    public static double[] tfidfCalculation (int totalDocAmount, int[] numberOfFilesContainOcurrency) {
-        double[] tfidf = new double[26];
+    public static double[][] tfidfCalculation (int[][] data, int totalDocAmount, int[] numberOfFilesContainOcurrency) {
+        double[][] tfidf = new double[totalDocAmount][numberOfFilesContainOcurrency.length];
         
-        for (int i = 0; i < 26; i++) {
-            if (numberOfFilesContainOcurrency[i] == 0) {
-                tfidf[i] = 0;
-            } else {
-                tfidf[i] = totalDocAmount/numberOfFilesContainOcurrency[i]; 
+        for (int i = 0; i < totalDocAmount; i++) {
+            for (int j = 0; j < 26; j++) {
+                if (numberOfFilesContainOcurrency[j] == 0) {
+                    tfidf[i][j] =  0;
+                } else {
+                    tfidf[i][j] =  (double) data[i][j] * (double) (totalDocAmount/numberOfFilesContainOcurrency[j]); 
+                }
             }
         }
-
         return tfidf;
     }
+    
+
 }
 
 class Data {
@@ -317,28 +359,28 @@ class Data {
                         ocurrencyCounter[20]++;
                     }
                     break;
-                case 'W':
+                case 'V':
                     bool[21] = true;
                     data[counter][21]++;
                     if (counter < numberOfDocs-1) {                                
                         ocurrencyCounter[21]++;
                     }
                     break;
-                case 'X':
+                case 'W':
                     bool[22] = true;
                     data[counter][22]++;
                     if (counter < numberOfDocs-1) {                                
                         ocurrencyCounter[22]++;
                     }
                     break;
-                case 'Y':
+                case 'X':
                     bool[23] = true;
                     data[counter][23]++;
                     if (counter < numberOfDocs-1) {                                
                         ocurrencyCounter[23]++;
                     }
                     break;
-                case 'V':
+                case 'Y':
                     bool[24] = true;
                     data[counter][24]++;
                     if (counter < numberOfDocs-1) {                                
