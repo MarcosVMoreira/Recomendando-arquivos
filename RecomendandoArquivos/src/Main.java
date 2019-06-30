@@ -14,20 +14,20 @@ class Main {
     public static void main(String[] args) throws IOException {
         
         double[][] tfidf;
-        int[] numberOfFilesContainOcurrency;
-        int totalDocAmount;
+        double[] numberOfFilesContainOcurrency;
+        double totalDocAmount;
         double[] similaryArray, tfidfLastDoc;
-        int[][] dataArray;
+        double[][] dataArray;
         
         Data data = new Data();
         
-        //dataArray = data.readFile("3.in");
+        //dataArray = data.readFile("5.in");
         dataArray = data.readInput();
 
         totalDocAmount = dataArray.length-1;
-        tfidf = new double[totalDocAmount][26];
+        tfidf = new double[(int)totalDocAmount][26];
         tfidfLastDoc = new double[26];
-        similaryArray = new double[totalDocAmount];
+        similaryArray = new double[(int)totalDocAmount];
 
         
         /*for (int i = 0; i < dataArray.length; i++) {
@@ -54,17 +54,20 @@ class Main {
             System.out.println("");
         }*/
         
-        for (int i = 0; i < dataArray[totalDocAmount-1].length; i++) {
-            tfidfLastDoc[i] = (double) dataArray[totalDocAmount][i];
+        for (int i = 0; i < dataArray[(int)totalDocAmount-1].length; i++) {
+            tfidfLastDoc[i] = (double) dataArray[(int)totalDocAmount][i];
         }
         
-        /*System.out.println("\ntfidfLastDoc ");
-        for (int i = 0; i < tfidfLastDoc.length; i++) {
-            System.out.print(tfidfLastDoc[i]+" ");
-        }*/
+//        System.out.println("\ntfidfLastDoc ");
+//        for (int i = 0; i < tfidfLastDoc.length; i++) {
+//            System.out.print(tfidfLastDoc[i]+" ");
+//        }
         
         similaryArray = similarityCalculation(totalDocAmount, tfidf, tfidfLastDoc);
             
+        
+      
+        
         double max = Double.MIN_VALUE;
         int aux = 0;
         
@@ -93,9 +96,9 @@ class Main {
         return df.format(x);
     }
     
-    public static double[] similarityCalculation (int totalDocAmount, double[][] tfidf, double[] tfidfLastDoc) {
+    public static double[] similarityCalculation (double totalDocAmount, double[][] tfidf, double[] tfidfLastDoc) {
         
-        double[] similatiryArray = new double[totalDocAmount];
+        double[] similatiryArray = new double[(int)totalDocAmount];
         double sum = 0;
         double firstSqrt = 0;
         double secondSqrt = 0;
@@ -110,14 +113,13 @@ class Main {
                 secondSqrt = secondSqrt + (double) tfidfLastDoc[j]*tfidfLastDoc[j];
             }
             similatiryArray[i] = Math.floor((((double) sum / (double) (Math.sqrt(firstSqrt) * (Math.sqrt(secondSqrt)))))*10000)/100.00;
-
         }
         
         return similatiryArray;
     }
     
-    public static double[][] tfidfCalculation (int[][] data, int totalDocAmount, int[] numberOfFilesContainOcurrency) {
-        double[][] tfidf = new double[totalDocAmount][numberOfFilesContainOcurrency.length];
+    public static double[][] tfidfCalculation (double[][] data, double totalDocAmount, double[] numberOfFilesContainOcurrency) {
+        double[][] tfidf = new double[(int)totalDocAmount][numberOfFilesContainOcurrency.length];
         
         for (int i = 0; i < totalDocAmount; i++) {
             for (int j = 0; j < 26; j++) {
@@ -137,18 +139,18 @@ class Main {
 class Data {
     
     private FileReader fileReader;
-    private int numberOfDocs;
-    private int[] ocurrencyCounter;
-    private int[] numberOfFilesContainOcurrency;
+    private double numberOfDocs;
+    private double[] ocurrencyCounter;
+    private double[] numberOfFilesContainOcurrency;
     private boolean[] bool = new boolean[26];
-    private int data[][];
+    private double data[][];
     private int counter = 0;
 
     
-    public int[][] readFile (String filePath) {
+    public double[][] readFile (String filePath) {
 
-        numberOfFilesContainOcurrency = new int[26];
-        ocurrencyCounter = new int[26];
+        numberOfFilesContainOcurrency = new double[26];
+        ocurrencyCounter = new double[26];
         
         try {
             fileReader = new FileReader(filePath);
@@ -156,7 +158,7 @@ class Data {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line = bufferedReader.readLine();
             this.numberOfDocs = Integer.parseInt(line);
-            data = new int[numberOfDocs][26];
+            data = new double[(int)numberOfDocs][26];
             
             while ((line = bufferedReader.readLine()) != null) {
                 String split[] = line.split(" ");
@@ -173,16 +175,16 @@ class Data {
         return null;
     }
     
-    public int [][] readInput () throws IOException {
+    public double[][] readInput () throws IOException {
         
-        numberOfFilesContainOcurrency = new int[26];
-        ocurrencyCounter = new int[26];
+        numberOfFilesContainOcurrency = new double[26];
+        ocurrencyCounter = new double[26];
         
         BufferedReader reader =  
                    new BufferedReader(new InputStreamReader(System.in)); 
         String line = reader.readLine(); 
         this.numberOfDocs = Integer.parseInt(line);
-        data = new int[numberOfDocs][26];
+        data = new double[(int)numberOfDocs][26];
             
         while (counter != numberOfDocs) {
             line = reader.readLine(); 
@@ -405,11 +407,11 @@ class Data {
     /**
      * @return the ocurrencyCounter
      */
-    public int[] getOcurrencyCounter() {
+    public double[] getOcurrencyCounter() {
         return ocurrencyCounter;
     }
     
-    public int[] getNumberOfFilesContainOcurrency() {
+    public double[] getNumberOfFilesContainOcurrency() {
         return numberOfFilesContainOcurrency;
     }
     
